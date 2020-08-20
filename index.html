@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+	<title>Task List</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
+	<style>
+		body {
+			padding: 20px;
+			background: linear-gradient(45deg, #555999, #333);
+		}
+		.container {
+			max-width: 50%;
+			min-height: 100vh;
+		}
+		h1 {color: #ddd;}
+		.task-string {
+			display: flex;
+			justify-content: space-between;
+		}
+		@media (max-width: 1099px) {
+			.container {
+				min-width: 60%;
+			}
+		}
+		@media (max-width: 768px) {
+			.container {
+				min-width: 96%;
+			}
+		}
+		@media (max-width: 479px) {
+			.container {
+				min-width: 96%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="task-app" class="container">
+		<header>
+			<h1>{{ title }}</h1>
+		</header> 
+		<form class="form">
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" id="itemForm" placeholder="Add task">
+				<div class="input-group-append">
+					<button class="btn btn-outline-primary" @click="addItem" type="button">
+						Add
+					</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-striped table-dark">
+			<thead>
+				<tr>
+					<th scope="col">Tasks:</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="item in items">
+					<th scope="row" class="task-string">{{ item.text }} <button @click="deleteItem(index)" class="btn btn-danger">X</button></th> 
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script>
+		var app = new Vue({
+	el: '#task-app',
+	data: {
+		title: "Task List",
+		items: [
+			//{ text: "First" },
+			//{ text: "Second" },
+			//{ text: "Third" },
+			//{ text: "Fourth" }
+		]
+	},
+	methods: {
+		addItem: function () {
+			var input = document.getElementById('itemForm');
+
+			if (input.value !== '') {
+				this.items.push({
+					text:input.value
+				})
+				input.value = "";
+			};
+
+			if(event.keyCode == 13){
+        		$("#id_of_button").click();
+        		$(this).val('');
+    		}
+		},
+		deleteItem: function(index) {
+			this.items.splice(index, 1);
+		}
+	}
+});
+	</script>
+</body>
+</html>
